@@ -1,7 +1,0 @@
-node_modules/
-*.d.ts
-*.js
-rocketmq-all-*/
-nohup.out
-dist/
-coverage/

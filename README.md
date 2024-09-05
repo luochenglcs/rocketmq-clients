@@ -1,56 +1,46 @@
-# RocketMQ Clients - Collection of Client Bindings for Apache RocketMQ
+# The Rust Implementation of Apache RocketMQ Client
 
-[![License][license-image]][license-url] [![Build][build-image]][build-url]
+[![Codecov-rust][codecov-rust-image]][codecov-url]
+[![Crates.io][crates-image]][crates-url]
+[![docs.rs][rust-doc-image]][rust-doc-url]
 
-English | [简体中文](README-CN.md) | [RocketMQ Website](https://rocketmq.apache.org/)
+[RocketMQ Website](https://rocketmq.apache.org/)
 
 ## Overview
 
-Client bindings for [Apache RocketMQ](https://rocketmq.apache.org/), as known as RocketMQ 5.x SDK. All of them follow the specification of [rocketmq-apis](https://github.com/apache/rocketmq-apis), replacing 4.x remoting-based counterparts. Clients in this repository are built on top of [Protocol Buffers](https://developers.google.com/protocol-buffers) and [gRPC](https://grpc.io/).
+Here is the rust implementation of the client for [Apache RocketMQ](https://rocketmq.apache.org/). Different from the [remoting-based client](https://github.com/apache/rocketmq/tree/develop/client), the current implementation is based on separating architecture for computing and storage, which is the more recommended way to access the RocketMQ service.
 
-## Goal
+Here are some preparations you may need to know [Quick Start](https://rocketmq.apache.org/docs/quickStart/02quickstart).
 
-Provide cloud-native and robust solutions for Java, C++, C#, Golang, Rust and all other mainstream programming languages.
+## Getting Started
 
-## Features and Status
+### Requirements
 
-* Ready - ✅
-* Work in progress - 🚧
+1. rust toolchain, rocketmq's MSRV is 1.61.
+2. protoc 3.15.0+
+3. setup name server, broker, and [proxy](https://github.com/apache/rocketmq/tree/develop/proxy).
 
-| Feature                                        | Java  | C/C++ |  C#   | Golang | Rust  | Python | Node.js |  PHP  |
-| ---------------------------------------------- | :---: | :---: | :---: | :----: | :---: | :----: | :-----: | :---: |
-| Producer with standard messages                |   ✅   |   ✅   |   ✅   |   ✅    |   ✅   |   🚧    |    ✅    |   🚧   |
-| Producer with FIFO messages                    |   ✅   |   ✅   |   ✅   |   ✅    |   ✅   |   🚧    |    ✅    |   🚧   |
-| Producer with timed/delay messages             |   ✅   |   ✅   |   ✅   |   ✅    |   ✅   |   🚧    |    ✅    |   🚧   |
-| Producer with transactional messages           |   ✅   |   ✅   |   ✅   |   ✅    |   ✅   |   🚧    |    ✅    |   🚧   |
-| Simple consumer                                |   ✅   |   ✅   |   ✅   |   ✅    |   ✅   |   🚧    |    ✅    |   🚧   |
-| Push consumer with concurrent message listener |   ✅   |   ✅   |   🚧   |   🚧    |   ✅   |   🚧    |    🚧    |   🚧   |
-| Push consumer with FIFO message listener       |   ✅   |   ✅   |   🚧   |   🚧    |   ✅   |   🚧    |    🚧    |   🚧   |
-
-## Prerequisite and Build
-
-This project is organized as a monorepo, with each language's bindings containing specific instructions in their respective subdirectories for building the project. As the [rocketmq-apis](https://github.com/apache/rocketmq-apis) submodule is incorporated into the project and could be utilized by some bindings, we highly advise cloning the repository by executing the command below:
+### Run Tests
 
 ```sh
-git clone --recursive git@github.com:apache/rocketmq-clients.git
+cargo llvm-cov --ignore-filename-regex pb/ --open
 ```
 
-## Contributing
+### Run Example
 
-Similar to other projects of Apache RocketMQ, any attempt to make this project better is welcome, including but not limited to filing a bug report, correcting type error or document writing to complete feature implementation. Do not hesitate to make a pull request if this project catches your attention.
+Run the following command to start the example:
 
-## Related
+```sh
+# send message via producer
+cargo run --example producer
 
-* [rocketmq](https://github.com/apache/rocketmq): The implementation of server-side.
-* [rocketmq-apis](https://github.com/apache/rocketmq-apis): Common communication protocol between server and client.
-* [RIP-37: New and Unified APIs](https://shimo.im/docs/m5kv92OeRRU8olqX): RocketMQ proposal of new and unified APIs crossing different languages.
-* [RIP-39: Support gRPC protocol](https://shimo.im/docs/gXqmeEPYgdUw5bqo): RocketMQ proposal of gRPC protocol support.
+# consume message via simple consumer
+cargo run --example simple_consumer
+```
 
-## License
-
-[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html) Copyright (C) Apache Software Foundation
-
-[license-image]: https://img.shields.io/badge/license-Apache%202-4EB1BA.svg
-[license-url]: https://www.apache.org/licenses/LICENSE-2.0.html
-[build-image]: https://github.com/apache/rocketmq-clients/actions/workflows/build.yml/badge.svg
-[build-url]: https://github.com/apache/rocketmq-clients/actions/workflows/build.yml
+[codecov-rust-image]: https://img.shields.io/codecov/c/gh/apache/rocketmq-clients/master?flag=rust&label=Rust%20Coverage&logo=codecov
+[codecov-url]: https://app.codecov.io/gh/apache/rocketmq-clients
+[crates-image]: https://img.shields.io/crates/v/rocketmq.svg
+[crates-url]: https://crates.io/crates/rocketmq
+[rust-doc-image]: https://img.shields.io/docsrs/rocketmq
+[rust-doc-url]: https://docs.rs/rocketmq
